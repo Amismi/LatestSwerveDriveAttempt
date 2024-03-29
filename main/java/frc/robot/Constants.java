@@ -58,9 +58,9 @@ public final class Constants {
     public static final double kMaxSpeedMetersPerSecond = 4;
 
     public static boolean kFrontLeftDriveEncoderReversed = true;
-    public static boolean kBackLeftDriveEncoderReversed = true;
-    public static boolean kFrontRightDriveEncoderReversed = true;
-    public static boolean kBackRightDriveEncoderReversed = true; 
+    public static boolean kBackLeftDriveEncoderReversed = false;
+    public static boolean kFrontRightDriveEncoderReversed = false;
+    public static boolean kBackRightDriveEncoderReversed = false; 
 
     public static boolean kFrontLeftDriveAbsoluteEncoderReversed = false;
     public static boolean kBackLeftDriveAbsoluteEncoderReversed = false;
@@ -79,10 +79,20 @@ public final class Constants {
     public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 1;
     //These Encoder Values are to be tweaked
 
-
+    // speed values
+    public static final double kPhysicalMaxSpeedMetersPerSecond = 4;
+    public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
+    public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
+    public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
+    public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
+    public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
   }
   
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+
+    public static final double kDeadband = 0.05;
+
+
   }
 }
