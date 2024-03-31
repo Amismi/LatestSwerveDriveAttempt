@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.AnalogInput;
 import com.revrobotics.CANSparkBase;
@@ -15,10 +16,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.driveConstants;
 
+
 public class SwerveModule {
     //Swerve module motor variables
     private CANSparkMax driveMotor;
     private CANSparkMax angleMotor;
+    private CANCoder Encoder;    
     
 
     // Swerve Module encoder variables

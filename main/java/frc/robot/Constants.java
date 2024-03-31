@@ -33,7 +33,7 @@ public final class Constants {
   {
     public static final double kTrackWidth = Units.inchesToMeters(27);
     public static final double kWheelBase = Units.inchesToMeters(24);
-    public static final SwerveDriveKinematics swerveKinematics =
+    public static final SwerveDriveKinematics kSwerveKinematics =
     new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2.0, kTrackWidth / 2.0), //translation 2d locates the swerve module in cords
         new Translation2d(kWheelBase / 2.0, -kTrackWidth / 2.0),
@@ -57,7 +57,7 @@ public final class Constants {
 
     public static final double kMaxSpeedMetersPerSecond = 4;
 
-    public static boolean kFrontLeftDriveEncoderReversed = true;
+    public static boolean kFrontLeftDriveEncoderReversed = false;
     public static boolean kBackLeftDriveEncoderReversed = false;
     public static boolean kFrontRightDriveEncoderReversed = false;
     public static boolean kBackRightDriveEncoderReversed = false; 
@@ -71,13 +71,12 @@ public final class Constants {
     public static boolean kBackLeftAngleEncoderReversed = false;
     public static boolean kFrontRightAngleEncoderReversed = false;
     public static boolean kBackRightAngleEncoderReversed = false; 
-    //All Boolean Values are To Be Tweaked
 
-    public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 1;
-    public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 1;
-    public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 1;
-    public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 1;
-    //These Encoder Values are to be tweaked
+
+    public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 3.79504393;
+    public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.86555523;
+    public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 5.13737665;
+    public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 6.22489131;
 
     // speed values
     public static final double kPhysicalMaxSpeedMetersPerSecond = 4;

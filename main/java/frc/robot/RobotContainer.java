@@ -7,10 +7,28 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.SwerveSubystem;
+
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest.RobotCentric;
+
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Axis;
+import edu.wpi.first.wpilibj.XboxController.Button;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,12 +40,42 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
+
+
+  //creating trigger for robot centric drive
+
+  
+  //creating instances of swervesubsystems in robot container
+  private final SwerveSubystem swerveSubystem = new SwerveSubystem();
+
+
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  public final CommandXboxController driverController =
+      new CommandXboxController(0);
+  
+  //creating joystick variables off of the controller
+  private final int translationAxis = XboxController.Axis.kLeftY.value;
+  private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  private final int rotationAxis = XboxController.Axis.kRightX.value;
+  
+
+  //creating trigger for robot centric/field oriented drive
+  private final Trigger robotCentric =
+  new Trigger(driverController.leftBumper());
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    //setting the joystick controls to the drive variables
+    swerveSubystem.setDefaultCommand(new SwerveJoystickCmd(
+      swerveSubystem, 
+        () -> -driverController.getRawAxis(translationAxis), 
+        () -> -driverController.getRawAxis(strafeAxis),
+        () -> -driverController.getRawAxis(rotationAxis), 
+        () -> robotCentric.getAsBoolean()));
+  
+
+
     // Configure the trigger bindings
     configureBindings();
   }
@@ -43,12 +91,13 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+
+    //setting button to reset the gryo
+    driverController.button(1).onTrue(new InstantCommand(() -> swerveSubystem.zeroHeading()));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**
